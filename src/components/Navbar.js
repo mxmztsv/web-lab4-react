@@ -20,7 +20,7 @@ export const Navbar = (props) => {
         <div className="navbar-fixed">
             <nav>
                 <div className="nav-wrapper indigo" style={{ padding: '0 2rem' }}>
-                    <span className="brand-logo">ЛР4 - {props.name}</span>
+                    <span className="brand-logo">ЛР4 - id#{props.name}</span>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
                     </ul>

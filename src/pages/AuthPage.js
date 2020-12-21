@@ -14,6 +14,7 @@ export const AuthPage = (props) => {
         pass: ''
     })
 
+
     useEffect(() => {
         message(error)
         clearError()
@@ -33,8 +34,13 @@ export const AuthPage = (props) => {
             // здесь будет запрос на авторизацию
 
             // const data = await request('/api/auth/login', 'POST', {...form})
-            const data = await request('http://localhost:8080/api/v1/user/create', 'POST', {...form})
-            // console.log(data)
+            let formdata = new FormData()
+            formdata.append("username", form.login)
+            formdata.append("password", form.pass)
+
+
+            const data = await request('http://localhost:8080/api/v1/session/create', 'POST', formdata)
+            console.log("Data", data)
             // localStorage.setItem('userData', data)
 
             // ожидается что то типа такого в ответе
@@ -44,8 +50,8 @@ export const AuthPage = (props) => {
             //     name: 'Maxim'
             // }
 
-            auth.login(data.token, data.userId, data.name)
-            changeName(data.name)
+            auth.login(data.token, data.userId)
+            changeName(data.userId)
 
         } catch (e) {
             console.log(e.message)
@@ -58,8 +64,18 @@ export const AuthPage = (props) => {
 
             // здесь будет запрос на регистрацию
 
+            let formdata = new FormData()
+            formdata.append("username", form.login)
+            formdata.append("password", form.pass)
+
+
+            const data = await request('http://localhost:8080/api/v1/user/create', 'POST', formdata)
+
+            auth.login(data.token, data.userId)
+            changeName(data.userId)
+
             // const data = await request('/api/auth/register', 'POST', {...form})
-            // console.log('Data', data)
+            console.log('Data', data)
         } catch (e) {
             console.log(e.message)
         }
