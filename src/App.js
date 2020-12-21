@@ -31,7 +31,7 @@ import {MainPage} from "./pages/MainPage";
 import {AuthPage} from "./pages/AuthPage";
 
 const initialState = {
-    name: 'Имя пользователя'
+    name: ''
 }
 
 const rootReducer = (state = initialState, action) => {

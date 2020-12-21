@@ -9,6 +9,10 @@ h1 {
     color: black;
 }
 
+.svg-graph {
+
+}
+
 /* change colour of filled in check box */
 .checkbox-orange[type="checkbox"].filled-in:checked + span:not(.lever):after
 {

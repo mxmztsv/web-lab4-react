@@ -62,10 +62,10 @@ export const Graph = (props) => {
 
                     {/*Линии оси*/}
 
-                    <line className="axis" x1="0" x2="300" y1="150" y2="150" stroke="white"/>
+                    <line className="axis" x1="50" x2="200" y1="150" y2="150" stroke="white"/>
                     <line className="axis" x1="150" x2="150" y1="0" y2="300" stroke="white"/>
                     <polygon points="150,0 144,15 156,15" stroke="white" fill="white"/>
-                    <polygon points="300,150 285,156 285,144" stroke="white" fill="white"/>
+                    <polygon points="265,150 250,156 250,144" stroke="white" fill="white"/>
 
                     <line className="coor-line" x1="200" x2="200" y1="155" y2="145" stroke="white"/>
                     <line className="coor-line" x1="250" x2="250" y1="155" y2="145" stroke="white"/>
