@@ -34,12 +34,12 @@ export const AuthPage = (props) => {
             // здесь будет запрос на авторизацию
 
             // const data = await request('/api/auth/login', 'POST', {...form})
-            let formdata = new FormData()
-            formdata.append("username", form.login)
-            formdata.append("password", form.pass)
+            // let formdata = new FormData()
+            // formdata.append("username", form.login)
+            // formdata.append("password", form.pass)
 
 
-            const data = await request('http://localhost:8080/api/v1/session/create', 'POST', formdata)
+            const data = await request('http://localhost:8080/api/v1/session/create', 'POST', {...form})
             console.log("Data", data)
             // localStorage.setItem('userData', data)
 
@@ -50,7 +50,7 @@ export const AuthPage = (props) => {
             //     name: 'Maxim'
             // }
 
-            auth.login(data.token, data.userId)
+            auth.login(data.token, data.userId, data.userId)
             changeName(data.userId)
 
         } catch (e) {
@@ -64,14 +64,14 @@ export const AuthPage = (props) => {
 
             // здесь будет запрос на регистрацию
 
-            let formdata = new FormData()
-            formdata.append("username", form.login)
-            formdata.append("password", form.pass)
+            // let formdata = new FormData()
+            // formdata.append("username", form.login)
+            // formdata.append("password", form.pass)
 
 
-            const data = await request('http://localhost:8080/api/v1/user/create', 'POST', formdata)
+            const data = await request('http://localhost:8080/api/v1/user/create', 'POST', {...form})
 
-            auth.login(data.token, data.userId)
+            auth.login(data.token, data.userId, data.userId)
             changeName(data.userId)
 
             // const data = await request('/api/auth/register', 'POST', {...form})
