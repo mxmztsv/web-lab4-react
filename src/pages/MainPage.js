@@ -112,7 +112,7 @@ export const MainPage = () => {
                     <div className="card-panel pink lighten-1 hoverable">
                         {/*<div className="graph-box">*/}
                         <ReactCursorPosition>
-                            <Graph points={points}/>
+                            <Graph points={points} r={r}/>
                         </ReactCursorPosition>
                         {/*</div>*/}
 
@@ -270,9 +270,89 @@ export const MainPage = () => {
                                         <div className="col s4">
                                             <p>
                                                 <label>
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === -2} onChange={e => {
+                                                        // showHiddenOnly()
+                                                        changeR(-2)
+                                                    }}/>
+                                                    <span className="white-text">-2</span>
+                                                </label>
+                                            </p>
+                                        </div>
+
+                                        <div className="col s4">
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === -1.5} onChange={e => {
+                                                        // showHiddenOnly()
+                                                        changeR(-1.5)
+                                                    }}/>
+                                                    <span className="white-text">-1.5</span>
+                                                </label>
+                                            </p>
+                                        </div>
+
+                                        <div className="col s4">
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === -1} onChange={e => {
+                                                        // showHiddenOnly()
+                                                        changeR(-1)
+                                                    }}/>
+                                                    <span className="white-text">-1</span>
+                                                </label>
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="row">
+
+                                        <div className="col s4">
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === -0.5} onChange={e => {
+                                                        // showHiddenOnly()
+                                                        setR(-0.5)
+                                                    }}/>
+                                                    <span className="white-text">-0.5</span>
+                                                </label>
+                                            </p>
+                                        </div>
+
+                                        <div className="col s4">
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === 0} onChange={e => {
+                                                        // showHiddenOnly()
+                                                        setR(0)
+                                                    }}/>
+                                                    <span className="white-text">0</span>
+                                                </label>
+                                            </p>
+                                        </div>
+
+                                        <div className="col s4">
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === 0.5} onChange={e => {
+                                                        // showHiddenOnly()
+                                                        setR(0.5)
+                                                    }}/>
+                                                    <span className="white-text">0.5</span>
+                                                </label>
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="row">
+
+                                        <div className="col s4">
+                                            <p>
+                                                <label>
                                                     <input type="checkbox" className="filled-in checkbox-orange" checked={r === 1} onChange={e => {
                                                         // showHiddenOnly()
-                                                        changeR(1)
+                                                        setR(1)
                                                     }}/>
                                                     <span className="white-text">1</span>
                                                 </label>
@@ -282,11 +362,11 @@ export const MainPage = () => {
                                         <div className="col s4">
                                             <p>
                                                 <label>
-                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === 2} onChange={e => {
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === 1.5} onChange={e => {
                                                         // showHiddenOnly()
-                                                        changeR(2)
+                                                        setR(1.5)
                                                     }}/>
-                                                    <span className="white-text">2</span>
+                                                    <span className="white-text">1.5</span>
                                                 </label>
                                             </p>
                                         </div>
@@ -294,96 +374,16 @@ export const MainPage = () => {
                                         <div className="col s4">
                                             <p>
                                                 <label>
-                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === 3} onChange={e => {
+                                                    <input type="checkbox" className="filled-in checkbox-orange" checked={r === 2} onChange={e => {
                                                         // showHiddenOnly()
-                                                        changeR(3)
+                                                        setR(2)
                                                     }}/>
-                                                    <span className="white-text">3</span>
+                                                    <span className="white-text">2</span>
                                                 </label>
                                             </p>
                                         </div>
 
                                     </div>
-
-                                    {/*<div className="row">*/}
-
-                                    {/*    <div className="col s4">*/}
-                                    {/*        <p>*/}
-                                    {/*            <label>*/}
-                                    {/*                <input type="checkbox" className="filled-in checkbox-orange" checked={r === -0.5} onChange={e => {*/}
-                                    {/*                    // showHiddenOnly()*/}
-                                    {/*                    setR(-0.5)*/}
-                                    {/*                }}/>*/}
-                                    {/*                <span className="white-text">-0.5</span>*/}
-                                    {/*            </label>*/}
-                                    {/*        </p>*/}
-                                    {/*    </div>*/}
-
-                                    {/*    <div className="col s4">*/}
-                                    {/*        <p>*/}
-                                    {/*            <label>*/}
-                                    {/*                <input type="checkbox" className="filled-in checkbox-orange" checked={r === 0} onChange={e => {*/}
-                                    {/*                    // showHiddenOnly()*/}
-                                    {/*                    setR(0)*/}
-                                    {/*                }}/>*/}
-                                    {/*                <span className="white-text">0</span>*/}
-                                    {/*            </label>*/}
-                                    {/*        </p>*/}
-                                    {/*    </div>*/}
-
-                                    {/*    <div className="col s4">*/}
-                                    {/*        <p>*/}
-                                    {/*            <label>*/}
-                                    {/*                <input type="checkbox" className="filled-in checkbox-orange" checked={r === 0.5} onChange={e => {*/}
-                                    {/*                    // showHiddenOnly()*/}
-                                    {/*                    setR(0.5)*/}
-                                    {/*                }}/>*/}
-                                    {/*                <span className="white-text">0.5</span>*/}
-                                    {/*            </label>*/}
-                                    {/*        </p>*/}
-                                    {/*    </div>*/}
-
-                                    {/*</div>*/}
-
-                                    {/*<div className="row">*/}
-
-                                    {/*    <div className="col s4">*/}
-                                    {/*        <p>*/}
-                                    {/*            <label>*/}
-                                    {/*                <input type="checkbox" className="filled-in checkbox-orange" checked={r === 1} onChange={e => {*/}
-                                    {/*                    // showHiddenOnly()*/}
-                                    {/*                    setR(1)*/}
-                                    {/*                }}/>*/}
-                                    {/*                <span className="white-text">1</span>*/}
-                                    {/*            </label>*/}
-                                    {/*        </p>*/}
-                                    {/*    </div>*/}
-
-                                    {/*    <div className="col s4">*/}
-                                    {/*        <p>*/}
-                                    {/*            <label>*/}
-                                    {/*                <input type="checkbox" className="filled-in checkbox-orange" checked={r === 1.5} onChange={e => {*/}
-                                    {/*                    // showHiddenOnly()*/}
-                                    {/*                    setR(1.5)*/}
-                                    {/*                }}/>*/}
-                                    {/*                <span className="white-text">1.5</span>*/}
-                                    {/*            </label>*/}
-                                    {/*        </p>*/}
-                                    {/*    </div>*/}
-
-                                    {/*    <div className="col s4">*/}
-                                    {/*        <p>*/}
-                                    {/*            <label>*/}
-                                    {/*                <input type="checkbox" className="filled-in checkbox-orange" checked={r === 2} onChange={e => {*/}
-                                    {/*                    // showHiddenOnly()*/}
-                                    {/*                    setR(2)*/}
-                                    {/*                }}/>*/}
-                                    {/*                <span className="white-text">2</span>*/}
-                                    {/*            </label>*/}
-                                    {/*        </p>*/}
-                                    {/*    </div>*/}
-
-                                    {/*</div>*/}
 
 
                                 </div>

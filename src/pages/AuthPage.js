@@ -3,8 +3,10 @@ import {useHttp} from "../hooks/http.hook";
 import {useMessage} from "../hooks/message.hook";
 import {AuthContext} from "../context/AuthContext";
 
-export const AuthPage = () => {
+export const AuthPage = (props) => {
     const auth = useContext(AuthContext)
+    const dispatch = props.dispatch
+    const { changeName } = props
     const message = useMessage()
     const {loading, error, request, clearError} = useHttp()
     const [form, setForm] = useState({
@@ -31,17 +33,19 @@ export const AuthPage = () => {
             // здесь будет запрос на авторизацию
 
             // const data = await request('/api/auth/login', 'POST', {...form})
+            const data = await request('http://localhost:8080/api/v1/user/create', 'POST', {...form})
             // console.log(data)
             // localStorage.setItem('userData', data)
 
             // ожидается что то типа такого в ответе
-            const data = {
-                token: 'testToken',
-                userId: '123',
-                name: 'Maxim'
-            }
+            // const data = {
+            //     token: 'testToken',
+            //     userId: '123',
+            //     name: 'Maxim'
+            // }
 
             auth.login(data.token, data.userId, data.name)
+            changeName(data.name)
 
         } catch (e) {
             console.log(e.message)

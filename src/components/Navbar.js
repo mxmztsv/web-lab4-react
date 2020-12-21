@@ -4,7 +4,7 @@ import {AuthContext} from '../context/AuthContext'
 import {useHttp} from "../hooks/http.hook";
 
 
-export const Navbar = () => {
+export const Navbar = (props) => {
     const history = useHistory()
     const auth = useContext(AuthContext)
 
@@ -20,7 +20,7 @@ export const Navbar = () => {
         <div className="navbar-fixed">
             <nav>
                 <div className="nav-wrapper indigo" style={{ padding: '0 2rem' }}>
-                    <span className="brand-logo">ЛР 4 (Антоневич, Зайцев)</span>
+                    <span className="brand-logo">ЛР4 - {props.name}</span>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
                     </ul>
