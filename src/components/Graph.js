@@ -17,6 +17,7 @@ export const Graph = (props) => {
     const {userId} = useContext(AuthContext)
     const auth = useContext(AuthContext)
     const message = useMessage()
+    // const {changePoints} = props.changePoints
 
     const {
         detectedEnvironment: {
@@ -59,13 +60,21 @@ export const Graph = (props) => {
 
     const graphClickHandler = async () => {
 
-        const data = await request(`http://localhost:8080/api/v1/area/check/?x=${graphX}&y=${graphY}&r=${Number(props.r)}`, 'POST', {
+        await request(`http://localhost:8080/api/v1/area/check/?x=${graphX}&y=${graphY}&r=${Number(props.r)}`, 'POST', {
             'x-user-id': userId,
             'x-token': token
         })
 
+        const data = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+            'x-user-id': userId,
+            'x-token': token
+        })
+
+        // changePoints(data)
+        props.function(data)
+
         console.log('Ответ с клика по графику',data)
-        window.location.reload()
+        // window.location.reload()
 
 
         message('x = ' + graphX + ' y = ' + graphY)
@@ -157,7 +166,7 @@ export const Graph = (props) => {
                         const cy = 300 / 2 - (Number(point.y) * 2) / Number(props.r) * 50
                         const color = point.result ? "white" : "white"
                             return (
-                                <circle r="5" cx={cx} cy={cy} id="target-dot" stroke={color} fill={point.result ? "white" : "transparent"}/>
+                                <circle r="5" cx={Number(cx)} cy={Number(cy)} id="target-dot" stroke={color} fill={point.result ? "white" : "transparent"}/>
 
                     )
                     }) }

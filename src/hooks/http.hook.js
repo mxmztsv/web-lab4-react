@@ -17,10 +17,10 @@ export const useHttp = () => {
             const response = await fetch(url, { method, body, headers })
             const data = await response.json()
 
-            console.log(data)
+            console.log('reg',data)
 
             if (!response.ok) {
-                throw new Error(response.text() || 'Something went wrong during http request')
+                throw new Error(response.text || 'Something went wrong during http request')
             }
 
             setLoading(false)
@@ -28,7 +28,7 @@ export const useHttp = () => {
             return data
         } catch (e) {
             setLoading(false)
-            setError(e.message)
+            setError('Не удалось')
             throw e
         }
     }, [])

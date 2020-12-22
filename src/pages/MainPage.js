@@ -7,48 +7,49 @@ import {useMessage} from "../hooks/message.hook";
 import {ResultsList} from "../components/ResultsList";
 import useMousePosition from "../hooks/mouse.hook";
 import ReactCursorPosition from "react-cursor-position";
+import {WrappedGraph} from "../App";
 
-export const MainPage = () => {
+export const MainPage = (props) => {
 // export class MainPage extends React.Component{
-
-    const pointsList = [
-        {
-            x: 1,
-            y: 1,
-            r: 2,
-            result: false
-        },
-        {
-            x: 0,
-            y: 0,
-            r: 1,
-            result: true
-        },
-        {
-            x: -2,
-            y: 1.2,
-            r: 3,
-            result: false
-        },
-        {
-            x: -1.12,
-            y: -1.6,
-            r: 2,
-            result: true
-        },
-        {
-            x: 0.35,
-            y: -0.9,
-            r: 2,
-            result: false
-        },
-        {
-            x: -2,
-            y: 1,
-            r: 3,
-            result: false
-        }
-    ]
+//
+//     const pointsList = [
+//         {
+//             x: 1,
+//             y: 1,
+//             r: 2,
+//             result: false
+//         },
+//         {
+//             x: 0,
+//             y: 0,
+//             r: 1,
+//             result: true
+//         },
+//         {
+//             x: -2,
+//             y: 1.2,
+//             r: 3,
+//             result: false
+//         },
+//         {
+//             x: -1.12,
+//             y: -1.6,
+//             r: 2,
+//             result: true
+//         },
+//         {
+//             x: 0.35,
+//             y: -0.9,
+//             r: 2,
+//             result: false
+//         },
+//         {
+//             x: -2,
+//             y: 1,
+//             r: 3,
+//             result: false
+//         }
+//     ]
 
 
     const [x, setX] = useState(0)
@@ -61,23 +62,43 @@ export const MainPage = () => {
     const auth = useContext(AuthContext)
     const message = useMessage()
     const { mouseX, mouseY } = useMousePosition()
+    // const { changePoints } = props.changePoints
 
     // setPoints(pointsList)
 
-    const getHistory = async () => {
-        const data = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
-            'x-user-id': userId,
-            'x-token': token
-        })
+//     const getHistory = async () => {
+//         const data = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+//             'x-user-id': userId,
+//             'x-token': token
+//         })
+//
+//         // const data = JSON.parse(resp)
+//         setPoints(data)
+// }
 
-        // const data = JSON.parse(resp)
-        setPoints(data)
-}
+    const getHistory = useCallback(async () => {
+        try {
+            const data = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+                'x-user-id': userId,
+                'x-token': token
+            })
 
+            // const data = JSON.parse(resp)
+            setPoints(data)
+        } catch (e) {}
+    }, [token, request, userId])
+
+
+    // useEffect(() => {
+    //     window.M.updateTextFields()
+    //     // getHistory()
+    //     // window.M.updateTextFields()
+    // }, [])
 
     useEffect(() => {
         window.M.updateTextFields()
         getHistory()
+        // window.M.updateTextFields()
     }, [getHistory])
 
 
@@ -112,11 +133,16 @@ export const MainPage = () => {
 
     const clearHandler = async () => {
 
+        message('Очистка...')
+        // message(userId)
+
         // здесь будет ajax запрос на удаление всех точек
         await request(`http://localhost:8080/api/v1/history/clear/`, 'POST', {
             'x-user-id': userId,
             'x-token': token
         })
+
+        getHistory()
 
 
     }
@@ -141,8 +167,11 @@ export const MainPage = () => {
                     <div className="card-panel pink lighten-1 hoverable">
                         {/*<div className="graph-box">*/}
                         <ReactCursorPosition>
-                            <Graph points={points} r={r}/>
+                            <Graph points={points} r={r} function={setPoints}/>
+                            {/*<WrappedGraph points={points} r={r}/>*/}
+                            {/*<WrappedGraph points={points} r={r} changePoints={props.changePoints}/>*/}
                         </ReactCursorPosition>
+
                         {/*</div>*/}
 
                     </div>

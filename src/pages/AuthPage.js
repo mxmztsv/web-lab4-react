@@ -29,69 +29,75 @@ export const AuthPage = (props) => {
     }
 
     const loginHandler = async () => {
-        try {
+        if (form.password.trim().length > 0 && form.username.trim().length > 0) {
+            try {
 
-            // здесь будет запрос на авторизацию
+                // здесь будет запрос на авторизацию
 
-            // const data = await request('/api/auth/login', 'POST', {...form})
-            // let formdata = new FormData()
-            // formdata.append("username", form.login)
-            // formdata.append("password", form.pass)
+                // const data = await request('/api/auth/login', 'POST', {...form})
+                // let formdata = new FormData()
+                // formdata.append("username", form.login)
+                // formdata.append("password", form.pass)
 
 
-            // const data = await request('http://localhost:8080/api/v1/session/create', 'POST', {...form})
-            const data = await request(`http://localhost:8080/api/v1/session/create?username=${form.username}&password=${form.password}`, 'POST')
-            // const data = JSON.parse(resp)
-            console.log("Data", data)
-            localStorage.setItem('userData', data)
+                // const data = await request('http://localhost:8080/api/v1/session/create', 'POST', {...form})
+                const data = await request(`http://localhost:8080/api/v1/session/create?username=${form.username}&password=${form.password}`, 'POST')
+                // const data = JSON.parse(resp)
+                console.log("Data", data)
+                // localStorage.setItem('userData', data)
 
-            // ожидается что то типа такого в ответе
-            // const data = {
-            //     token: 'testToken',
-            //     userId: '123',
-            //     name: 'Maxim'
-            // }
+                // ожидается что то типа такого в ответе
+                // const data = {
+                //     token: 'testToken',
+                //     userId: '123',
+                //     name: 'Maxim'
+                // }
 
-            auth.login(data.token, data.userId, data.userId)
-            changeName(data.userId)
+                auth.login(data.token, data.userId, data.userId)
+                changeName(data.userId)
 
-        } catch (e) {
-            console.log(e.message)
+            } catch (e) {
+                console.log(e.message)
+            }
         }
+
     }
 
 
     const registerHandler = async () => {
-        try {
+        if (form.password.trim().length > 0 && form.username.trim().length > 0) {
+            try {
 
-            // здесь будет запрос на регистрацию
+                // здесь будет запрос на регистрацию
 
-            // let formdata = new FormData()
-            // formdata.append("username", form.login)
-            // formdata.append("password", form.pass)
+                // let formdata = new FormData()
+                // formdata.append("username", form.login)
+                // formdata.append("password", form.pass)
 
 
-            const data = await request(`http://localhost:8080/api/v1/user/create?username=${form.username}&password=${form.password}`, 'POST')
-            // const data = JSON.parse(resp)
-            message('Присвоен id ' + data.id)
-            // const data = await fetch()
+                const data = await request(`http://localhost:8080/api/v1/user/create?username=${form.username}&password=${form.password}`, 'POST')
+                // const data = JSON.parse(resp)
+                message('Регистрация успешна')
+                // const data = await fetch()
 
-            // let data = await fetch('http://localhost:8080/api/v1/user/create', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json;charset=utf-8'
-            //     },
-            //     body: JSON.stringify({...form})
-            // });
+                // let data = await fetch('http://localhost:8080/api/v1/user/create', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json;charset=utf-8'
+                //     },
+                //     body: JSON.stringify({...form})
+                // });
 
-            // auth.login(data.token, data.userId, data.userId)
-            // changeName(data.userId)
+                // auth.login(data.token, data.userId, data.userId)
+                // changeName(data.userId)
 
-            // const data = await request('/api/auth/register', 'POST', {...form})
-            console.log('Data', data)
-        } catch (e) {
-            console.log(e.message)
+                // const data = await request('/api/auth/register', 'POST', {...form})
+                console.log('Data', data)
+            } catch (e) {
+                console.log(e.message)
+            }
         }
+
     }
 
     return (

@@ -1,23 +1,3 @@
-// import React from "react";
-// // import logo from './logo.svg'
-// import './App.css'
-// import 'materialize-css'
-//
-// function App() {
-//
-//
-//
-//   return (
-//     <div className="App">
-//       <p>qwer</p>
-//         <button className="btn waves-effect waves-light" type="submit" name="action">Submit
-//             <i className="material-icons right">send</i>
-//         </button>
-//     </div>
-//   )
-// }
-//
-// export default App
 import React from 'react'
 import 'materialize-css'
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
@@ -29,9 +9,11 @@ import {bindActionCreators, createStore} from 'redux'
 import {connect, Provider} from 'react-redux'
 import {MainPage} from "./pages/MainPage";
 import {AuthPage} from "./pages/AuthPage";
+import {Graph} from "./components/Graph";
 
 const initialState = {
-    name: ''
+    name: '42',
+    points: []
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -39,6 +21,8 @@ const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ACTION_CHANGE_NAME':
             return {...state, name: action.payload}
+        case 'ACTION_CHANGE_POINTS':
+            return {...state, points: action.payload}
     }
 
     return state
@@ -51,23 +35,33 @@ console.log(store.getState())
 const putStateToProps = (state) => {
     console.log(state)
     return {
-        name: state.name
+        name: state.name,
+        points: state.points
     }
 }
 
 const putActionToProps = (dispatch) => {
     return {
-        changeName: bindActionCreators(changeName, dispatch)
+        changeName: bindActionCreators(changeName, dispatch),
+        changePoints: bindActionCreators(changePoints, dispatch)
     }
 }
 
 const WrappedNavbar = connect(putStateToProps)(Navbar)
 const WrappedAuthPage = connect(putStateToProps, putActionToProps)(AuthPage)
+const WrappedMainPage = connect(putStateToProps, putActionToProps)(MainPage)
+export const WrappedGraph = connect(putStateToProps, putActionToProps)(Graph)
 
 const changeName = (newName) => {
     return {
         type: 'ACTION_CHANGE_NAME',
         payload: newName
+    }
+}
+const changePoints = (newPoints) => {
+    return {
+        type: 'ACTION_CHANGE_POINTS',
+        payload: newPoints
     }
 }
 
@@ -95,7 +89,7 @@ function App() {
                         <div className="container">
                             <Switch>
                                 <Route path="/" exact>
-                                    <MainPage />
+                                    <WrappedMainPage />
                                 </Route>
                                 <Redirect to="/" />
                             </Switch>
