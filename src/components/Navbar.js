@@ -5,12 +5,25 @@ import {useHttp} from "../hooks/http.hook";
 
 
 export const Navbar = (props) => {
+    const {loading, error, request, clearError} = useHttp()
+    const {token} = useContext(AuthContext)
+    const {userId} = useContext(AuthContext)
     const history = useHistory()
     const auth = useContext(AuthContext)
 
 
+    const destroySession = async () => {
+        await request(`http://localhost:8080/api/v1/session/destroy/?token=${token}`, 'POST', {
+            'x-user-id': userId,
+            'x-token': token
+        })
+    }
+
+
     const logoutHandler = event => {
         event.preventDefault()
+
+        destroySession()
         auth.logout()
         history.push('/')
     }

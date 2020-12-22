@@ -54,28 +54,53 @@ export const MainPage = () => {
     const [x, setX] = useState(0)
     const [y, setY] = useState('')
     const [r, setR] = useState(2)
-    const [points, setPoints] = useState(pointsList)
+    const [points, setPoints] = useState([])
     const {loading, request} = useHttp()
     const {token} = useContext(AuthContext)
+    const {userId} = useContext(AuthContext)
     const auth = useContext(AuthContext)
     const message = useMessage()
     const { mouseX, mouseY } = useMousePosition()
 
     // setPoints(pointsList)
 
+    const getHistory = async () => {
+        const resp = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+            'x-user-id': userId,
+            'x-token': token
+        })
+
+        const data = JSON.parse(resp)
+        setPoints(data)
+}
+
 
     useEffect(() => {
         window.M.updateTextFields()
-    }, [])
+        getHistory()
+    }, [getHistory])
 
 
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         const numY = Number(y)
         if (numY !== undefined && numY > -3 && numY < 3 && y !== '') {
             message('x = ' + x + ', y = ' + y + ', r = ' + r)
 
             // здесь будет ajax запрос на добавление точки
+
+            await request(`http://localhost:8080/api/v1/area/check/?x=${x}&y=${y}&r=${r}`, 'POST', {
+                'x-user-id': userId,
+                'x-token': token
+            })
+
+            const resp = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+                'x-user-id': userId,
+                'x-token': token
+            })
+
+            const data = JSON.parse(resp)
+            setPoints(data)
 
         } else {
             message('Некорректный Y')
@@ -85,10 +110,14 @@ export const MainPage = () => {
     }
 
 
-    const clearHandler = () => {
-        message('ты пидор')
+    const clearHandler = async () => {
 
         // здесь будет ajax запрос на удаление всех точек
+        await request(`http://localhost:8080/api/v1/history/clear/`, 'POST', {
+            'x-user-id': userId,
+            'x-token': token
+        })
+
 
     }
 

@@ -10,8 +10,8 @@ export const AuthPage = (props) => {
     const message = useMessage()
     const {loading, error, request, clearError} = useHttp()
     const [form, setForm] = useState({
-        login: '',
-        pass: ''
+        username: '',
+        password: ''
     })
 
 
@@ -39,9 +39,11 @@ export const AuthPage = (props) => {
             // formdata.append("password", form.pass)
 
 
-            const data = await request('http://localhost:8080/api/v1/session/create', 'POST', {...form})
+            // const data = await request('http://localhost:8080/api/v1/session/create', 'POST', {...form})
+            const resp = await request(`http://localhost:8080/api/v1/session/create?username=${form.username}&password=${form.password}`, 'POST')
+            const data = JSON.parse(resp)
             console.log("Data", data)
-            // localStorage.setItem('userData', data)
+            localStorage.setItem('userData', data)
 
             // ожидается что то типа такого в ответе
             // const data = {
@@ -69,10 +71,21 @@ export const AuthPage = (props) => {
             // formdata.append("password", form.pass)
 
 
-            const data = await request('http://localhost:8080/api/v1/user/create', 'POST', {...form})
+            const resp = await request(`http://localhost:8080/api/v1/user/create?username=${form.username}&password=${form.password}`, 'POST')
+            const data = JSON.parse(resp)
+            message('Присвоен id ' + data.id)
+            // const data = await fetch()
 
-            auth.login(data.token, data.userId, data.userId)
-            changeName(data.userId)
+            // let data = await fetch('http://localhost:8080/api/v1/user/create', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json;charset=utf-8'
+            //     },
+            //     body: JSON.stringify({...form})
+            // });
+
+            // auth.login(data.token, data.userId, data.userId)
+            // changeName(data.userId)
 
             // const data = await request('/api/auth/register', 'POST', {...form})
             console.log('Data', data)
@@ -83,7 +96,7 @@ export const AuthPage = (props) => {
 
     return (
         <div className="row">
-            <div className="col s6 offset-s3">
+            <div className="col s10 offset-s1">
                 <h1>Вход</h1>
                 <div className="card blue-grey darken-1">
                     <div className="card-content white-text">
@@ -91,13 +104,13 @@ export const AuthPage = (props) => {
                         <div>
 
                             <div className="input-field">
-                                <input placeholder="Введите логин" id="login" type="text" name="login" value={form.login} onChange={changeHandler}/>
-                                <label htmlFor="login">Логин</label>
+                                <input placeholder="Введите логин" id="username" type="text" name="username" value={form.username} onChange={changeHandler}/>
+                                <label htmlFor="username">Логин</label>
                             </div>
 
                             <div className="input-field">
-                                <input placeholder="Введите пароль" id="pass" type="password" name="pass" value={form.pass} onChange={changeHandler}/>
-                                <label htmlFor="login">Пароль</label>
+                                <input placeholder="Введите пароль" id="password" type="password" name="password" value={form.password} onChange={changeHandler}/>
+                                <label htmlFor="password">Пароль</label>
                             </div>
 
                         </div>

@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import useMousePosition from "../hooks/mouse.hook";
 import ReactCursorPosition from 'react-cursor-position';
 import {useMessage} from "../hooks/message.hook";
+import {useHttp} from '../hooks/http.hook'
+import {AuthContext} from '../context/AuthContext'
+
 
 
 // this._onMouseMove(e) {
@@ -9,6 +12,10 @@ import {useMessage} from "../hooks/message.hook";
 // }
 
 export const Graph = (props) => {
+    const {loading, request} = useHttp()
+    const {token} = useContext(AuthContext)
+    const {userId} = useContext(AuthContext)
+    const auth = useContext(AuthContext)
     const message = useMessage()
 
     const {
@@ -38,8 +45,8 @@ export const Graph = (props) => {
     const svgSize = 300
 
     // перевод в координаты относительно начала координат на графике (с божьей помощью)
-    const graphX = (((props.r / 50) * (svgSize / 2 - x) * -1) / 2).toFixed(1)
-    const graphY = (((props.r / 50) * (svgSize / 2 - y)) / 2 ).toFixed(1)
+    const graphX = (((Number(props.r) / 50) * (svgSize / 2 - x) * -1) / 2).toFixed(1)
+    const graphY = (((Number(props.r) / 50) * (svgSize / 2 - y)) / 2 ).toFixed(1)
 
     // const {mouseX, mouseY} = useMousePosition()
     // const hasMovedCursor = typeof mouseX === "number" && typeof mouseY === "number";
@@ -50,7 +57,15 @@ export const Graph = (props) => {
     //     return <p className="center">Фильмов пока нет</p>
     // }
 
-    const graphClickHandler = () => {
+    const graphClickHandler = async () => {
+
+        const data = await request(`http://localhost:8080/api/v1/area/check/?x=${graphX}&y=${graphY}&r=${Number(props.r)}`, 'POST', {
+            'x-user-id': userId,
+            'x-token': token
+        })
+
+        console.log('Ответ с клика по графику',data)
+
         message('x = ' + graphX + ' y = ' + graphY)
     }
 
@@ -91,8 +106,8 @@ export const Graph = (props) => {
                     <text className="coor-text" x="160" y="205" fill="white">{props.r/2 * -1}</text>
                     <text className="coor-text" x="160" y="255" fill="white">{props.r * -1}</text>
 
-                    {props.r === 0 ? (<></>) : (
-                        props.r > 0 ? (
+                    {Number(props.r) === 0 ? (<></>) : (
+                        Number(props.r) > 0 ? (
                             // Фигуры при положительном R
                         <>
                         <polygon className="svg-figure rectangle-figure" points="150,150 150,250 50,250, 50,150"
@@ -133,8 +148,8 @@ export const Graph = (props) => {
                     {/*<circle r="3" cx="150" cy="150" id="target-dot"/>*/}
 
                     { props.points.map((point, index) => {
-                        const cx = (point.x * 2) / props.r * 50 + 300 / 2
-                        const cy = 300 / 2 - (point.y * 2) / props.r * 50
+                        const cx = (Number(point.x) * 2) / Number(props.r) * 50 + 300 / 2
+                        const cy = 300 / 2 - (Number(point.y) * 2) / Number(props.r) * 50
                         const color = point.result ? "white" : "white"
                             return (
                                 <circle r="5" cx={cx} cy={cy} id="target-dot" stroke={color} fill={point.result ? "white" : "transparent"}/>
