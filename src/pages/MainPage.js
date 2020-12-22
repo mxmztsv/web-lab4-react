@@ -65,12 +65,12 @@ export const MainPage = () => {
     // setPoints(pointsList)
 
     const getHistory = async () => {
-        const resp = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+        const data = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
             'x-user-id': userId,
             'x-token': token
         })
 
-        const data = JSON.parse(resp)
+        // const data = JSON.parse(resp)
         setPoints(data)
 }
 
@@ -94,12 +94,12 @@ export const MainPage = () => {
                 'x-token': token
             })
 
-            const resp = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
+            const data = await request(`http://localhost:8080/api/v1/history/get/`, 'GET', {
                 'x-user-id': userId,
                 'x-token': token
             })
 
-            const data = JSON.parse(resp)
+            // const data = JSON.parse(resp)
             setPoints(data)
 
         } else {

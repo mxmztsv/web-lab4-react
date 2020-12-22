@@ -40,8 +40,8 @@ export const AuthPage = (props) => {
 
 
             // const data = await request('http://localhost:8080/api/v1/session/create', 'POST', {...form})
-            const resp = await request(`http://localhost:8080/api/v1/session/create?username=${form.username}&password=${form.password}`, 'POST')
-            const data = JSON.parse(resp)
+            const data = await request(`http://localhost:8080/api/v1/session/create?username=${form.username}&password=${form.password}`, 'POST')
+            // const data = JSON.parse(resp)
             console.log("Data", data)
             localStorage.setItem('userData', data)
 
@@ -71,8 +71,8 @@ export const AuthPage = (props) => {
             // formdata.append("password", form.pass)
 
 
-            const resp = await request(`http://localhost:8080/api/v1/user/create?username=${form.username}&password=${form.password}`, 'POST')
-            const data = JSON.parse(resp)
+            const data = await request(`http://localhost:8080/api/v1/user/create?username=${form.username}&password=${form.password}`, 'POST')
+            // const data = JSON.parse(resp)
             message('Присвоен id ' + data.id)
             // const data = await fetch()
 

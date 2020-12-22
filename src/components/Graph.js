@@ -65,8 +65,13 @@ export const Graph = (props) => {
         })
 
         console.log('Ответ с клика по графику',data)
+        window.location.reload()
+
 
         message('x = ' + graphX + ' y = ' + graphY)
+
+
+
     }
 
 
